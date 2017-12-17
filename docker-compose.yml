@@ -1,0 +1,19 @@
+version: "2"
+services:
+  sidama:
+    build: ./app
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_HOST=postgres
+    command: sh ./setup.sh
+    volumes:
+      - ./app/Sidama/:/app/Sidama/
+  postgres:
+    image: "postgres:9.6"
+    environment:
+      - POSTGRES_PASSWORD=sidamapassword
+      - POSTGRES_USER=sidamauser
+      - POSTGRES_DB=sidama
