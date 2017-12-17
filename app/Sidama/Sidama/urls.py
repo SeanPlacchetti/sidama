@@ -5,10 +5,19 @@ from rest_framework import routers
 from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
-from SidamaApp.views import SidamaViewSet, UserViewSet
+from SidamaApp.views import SidamaViewSet, UserViewSet, \
+    RoasterViewSet, CountryViewSet, RegionViewSet,\
+    VarietalViewSet, QualityViewSet, BeanViewSet, TagViewSet
 
 router = routers.DefaultRouter()
 router.register(r'sidama', SidamaViewSet)
+router.register(r'roaster', RoasterViewSet)
+router.register(r'country', CountryViewSet)
+router.register(r'region', RegionViewSet)
+router.register(r'varietal', VarietalViewSet)
+router.register(r'quality', QualityViewSet)
+router.register(r'bean', BeanViewSet)
+router.register(r'tag', TagViewSet)
 router.register(r'users', UserViewSet)
 
 urlpatterns = [url(r'^', include(router.urls)), ]
