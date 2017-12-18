@@ -160,5 +160,107 @@
       "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36",
       "message": "8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8"
     }
+  },
+  {
+    "model": "SidamaApp.roaster",
+    "pk": 1,
+    "fields": {
+      "name": "Counter Culture Coffee",
+      "website": "https://counterculturecoffee.com/",
+      "city": "Durham",
+      "state": "NC"
+    }
+  },
+  {
+    "model": "SidamaApp.roaster",
+    "pk": 2,
+    "fields": {
+      "name": "Lamplighter Coffee Roasters",
+      "website": "https://lamplightercoffee.com/",
+      "city": "Richmond",
+      "state": "VA"
+    }
+  },
+  {
+    "model": "SidamaApp.country",
+    "pk": 1,
+    "fields": {
+      "name": "USA",
+      "continent": "North America"
+    }
+  },
+  {
+    "model": "SidamaApp.country",
+    "pk": 2,
+    "fields": {
+      "name": "Ethiopia",
+      "continent": "Africa"
+    }
+  },
+  {
+    "model": "SidamaApp.country",
+    "pk": 3,
+    "fields": {
+      "name": "Burundi",
+      "continent": "Africa"
+    }
+  },
+  {
+    "model": "SidamaApp.country",
+    "pk": 4,
+    "fields": {
+      "name": "Guatemala",
+      "continent": "North America"
+    }
+  },
+  {
+    "model": "SidamaApp.country",
+    "pk": 5,
+    "fields": {
+      "name": "Kenya",
+      "continent": "Africa"
+    }
+  },
+  {
+    "model": "SidamaApp.tag",
+    "pk": 1,
+    "fields": {
+      "name": "Organic"
+    }
+  },
+  {
+    "model": "SidamaApp.tag",
+    "pk": 2,
+    "fields": {
+      "name": "Peaberry"
+    }
+  },
+  {
+    "model": "SidamaApp.tag",
+    "pk": 3,
+    "fields": {
+      "name": "Sun-Dried"
+    }
+  },
+  {
+    "model": "SidamaApp.tag",
+    "pk": 4,
+    "fields": {
+      "name": "Direct-Trade"
+    }
+  },
+  {
+    "model": "SidamaApp.tag",
+    "pk": 5,
+    "fields": {
+      "name": "Wet-Processed"
+    }
+  },
+  {
+    "model": "SidamaApp.tag",
+    "pk": 6,
+    "fields": {
+      "name": "Single-Farmer"
+    }
   }
 ]
