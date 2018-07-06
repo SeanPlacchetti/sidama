@@ -20,7 +20,7 @@ router.register(r'bean', BeanViewSet)
 router.register(r'tag', TagViewSet)
 router.register(r'users', UserViewSet)
 
-urlpatterns = [url(r'^', include(router.urls)), ]
+urlpatterns = [url(r'^api/', include(router.urls)), ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,
