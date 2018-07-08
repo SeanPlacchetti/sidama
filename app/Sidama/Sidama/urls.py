@@ -11,13 +11,13 @@ from SidamaApp.views import SidamaViewSet, UserViewSet, \
 
 router = routers.DefaultRouter()
 router.register(r'sidama', SidamaViewSet)
-router.register(r'roaster', RoasterViewSet)
-router.register(r'country', CountryViewSet)
-router.register(r'region', RegionViewSet)
-router.register(r'varietal', VarietalViewSet)
-router.register(r'quality', QualityViewSet)
-router.register(r'bean', BeanViewSet)
-router.register(r'tag', TagViewSet)
+router.register(r'roasters', RoasterViewSet)
+router.register(r'countries', CountryViewSet)
+router.register(r'regions', RegionViewSet)
+router.register(r'varietals', VarietalViewSet)
+router.register(r'qualities', QualityViewSet)
+router.register(r'beans', BeanViewSet)
+router.register(r'tags', TagViewSet)
 router.register(r'users', UserViewSet)
 
 urlpatterns = [url(r'^api/', include(router.urls)), ]

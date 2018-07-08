@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import Sidama, Roaster, Country, Varietal, Quality, Bean, Region, Tag
+from .models import Sidama, Roaster, Country, Varietal, Quality, Bean, Region, Tag, BeanRegion, BeanVarietal, \
+    BeanQuality, BeanTag
 
 __author__ = 'seanplacchetti'
 
@@ -39,10 +40,35 @@ class QualitySerializer(serializers.HyperlinkedModelSerializer):
         fields = ('quality_id', 'description')
 
 
+class BeanRegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BeanRegion
+
+
+class BeanVarietalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BeanVarietal
+
+
+class BeanQualitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BeanQuality
+
+
+class BeanTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BeanTag
+
+
 class BeanSerializer(serializers.HyperlinkedModelSerializer):
+    qualities = BeanQualitySerializer(source='bean_quality', many=True)
+    regions = BeanRegionSerializer(source='bean_region', many=True)
+    tags = BeanTagSerializer(source='bean_tag', many=True)
+    varietals = BeanVarietalSerializer(source='bean_varietal', many=True)
+
     class Meta:
         model = Bean
-        fields = ('roaster_id', 'roasted_date', 'bean_id')
+        fields = ('roaster_id', 'roasted_date', 'bean_id', 'qualities', 'regions', 'tags', 'varietals')
 
 
 class RegionSerializer(serializers.HyperlinkedModelSerializer):
