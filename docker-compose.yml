@@ -1,7 +1,8 @@
-version: "2"
+version: "3.6"
 services:
   sidama:
     build: ./app
+    container_name: sidama
     depends_on:
       - postgres
     ports:
@@ -9,11 +10,117 @@ services:
     environment:
       - POSTGRES_HOST=postgres
     command: sh ./setup.sh
+    networks:
+      - sidamanet
     volumes:
       - ./app/Sidama/:/app/Sidama/
   postgres:
-    image: "postgres:9.6"
+    container_name: postgres
+    image: "postgres:11.4"
+    networks:
+      - sidamanet
     environment:
       - POSTGRES_PASSWORD=sidamapassword
       - POSTGRES_USER=sidamauser
       - POSTGRES_DB=sidama
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - discovery.seed_hosts=elasticsearch2
+      - cluster.initial_master_nodes=elasticsearch
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    privileged: true
+    networks:
+      - sidamanet
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+  elasticsearch2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    container_name: elasticsearch2
+    environment:
+      - node.name=elasticsearch2
+      - discovery.seed_hosts=elasticsearch
+      - cluster.initial_master_nodes=elasticsearch
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    privileged: true
+    networks:
+        - sidamanet
+    volumes:
+      - esdata02:/usr/share/elasticsearch/data
+  app-search:
+    image: docker.elastic.co/app-search/app-search:7.2.0
+    container_name: app_search
+    ports:
+      - 3002:3002
+    environment:
+      elasticsearch.host: http://elasticsearch:9200/
+      allow_es_settings_modification: "true"
+    networks:
+      - sidamanet
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.2.0
+    container_name: logstash
+    environment:
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    privileged: true
+    depends_on:
+      - elasticsearch
+    networks:
+      - sidamanet
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:7.2.0
+    container_name: kibana
+    environment:
+      SERVER_NAME: localhost
+      ELASTICSEARCH_URL: http://elasticsearch:9200/
+    ports:
+      - 5601:5601
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    depends_on:
+      - elasticsearch
+    networks:
+      - sidamanet
+networks:
+  sidamanet:
+volumes:
+  esdata01:
+  esdata02:
